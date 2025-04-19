@@ -2,12 +2,19 @@ from fastapi import FastAPI, UploadFile, File, HTTPException, Depends
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 import os
+from dotenv import load_dotenv
 from . import models, pdf_handler
 from .database import engine, get_db
 
+load_dotenv()
+
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="ResumeGPT Backend")
+app = FastAPI(
+    title="ResumeGPT Backend",
+    description="Backend service for handling resume PDFs",
+    version="1.0.0"
+)
 
 @app.post("/resume/upload")
 async def upload_resume(

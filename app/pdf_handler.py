@@ -3,8 +3,11 @@ from reportlab.pdfgen import canvas
 import os
 from fastapi import UploadFile
 import uuid
+from dotenv import load_dotenv
 
-UPLOAD_DIR = "uploads"
+load_dotenv()
+
+UPLOAD_DIR = os.getenv("UPLOAD_DIR", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 async def save_upload_file(upload_file: UploadFile) -> str:
